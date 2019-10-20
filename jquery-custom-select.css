@@ -1,0 +1,39 @@
+/**** jquery-custom-select ****/
+.custom-select {
+	cursor: pointer;
+	position: relative;
+}
+.custom-select__hidden {
+	visibility: hidden;
+}
+.custom-select__list {
+	display: none;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	left: 0;
+	width: 100%;
+	z-index: 999;
+}
+.custom-select__list li {
+	display: block;
+	list-style: none;
+	margin: 0;
+	outline: none !important;
+}
+.custom-select__list li[rel=""],
+.custom-select__list li[rel="hide"] {
+	display: none;
+}
+.custom-select__styled {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}

@@ -4,7 +4,7 @@
 	Copyright (c) 2019 Gleb Kemarsky, https://github.com/glebkema
 	Based on https://codepen.io/wallaceerick/pen/ctsCz by Wallace Erick
 	Licensed under the MIT license
-	Version: 0.2.0
+	Version: 0.3.0
 */
 
 (function($) {
