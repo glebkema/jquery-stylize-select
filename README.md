@@ -4,13 +4,27 @@ The drop-down list for the select field itself is almost not styled. This plugin
 
 The CSS file contains only the properties required for the functioning of the drop-down list and the field with the selection result. You need to stylize them yourself.
 
-Based on [Custom Select Menu](https://codepen.io/wallaceerick/pen/ctsCz) by Wallace Erick [@wallaceerick](https://codepen.io/wallaceerick).
-
-<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="result" data-user="wallaceerick" data-slug-hash="ctsCz" style="height: 265px; box-sizing: border-box; display: flex;" data-pen-title="Custom Select Menu"></p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+Based on [Custom Select Menu](https://codepen.io/wallaceerick/pen/ctsCz), CodePen by [Wallace Erick](https://codepen.io/wallaceerick).
 
 
 ## The plugin creates 3 blocks and uses 4 style classes
+
+```html
+<div class="custom-select">
+	<select class="your-select-field custom-select__hidden">
+		<option value="apple" selected>Apple</option>
+		<option value="banana">Banana</option>
+		<option value="carrot">Carrot</option>
+	</select>
+	<div class="custom-select__styled" tabindex="0">Apple</div>
+	<ul class="custom-select__list" style="display: none;">
+		<li rel="apple"  tabindex="0">Apple</li>
+		<li rel="banana" tabindex="0">Banana</li>
+		<li rel="carrot" tabindex="0">Carrot</li>
+	</ul>
+</div>
+```
+
 
 | Option      | Default value            | Role                                                                                       |
 | ----------- | ------------------------ | ------------------------------------------------------------------------------------------ |
