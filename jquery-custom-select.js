@@ -4,7 +4,7 @@
 	Copyright (c) 2019 Gleb Kemarsky, https://github.com/glebkema
 	Based on https://codepen.io/wallaceerick/pen/ctsCz by Wallace Erick
 	Licensed under the MIT license
-	Version: 0.4.0
+	Version: 0.4.1
 */
 
 (function($) {
@@ -18,12 +18,12 @@
 				classList:   classSelect + '__list',    // CSS class for a <ul> that shows the list of the options for selection
 				classStyled: classSelect + '__styled',  // CSS class for a <div> that shows the selected option
 			}, options ),
-			STR_ACTIVE = 'active',
-			STR_OPTION = 'option';
+			STR_ACTIVE = 'active';
 
 		this.each(function() {
 			var	$select = $(this),
-				numberOfOptions = $select.children(STR_OPTION).length,
+				$selectOptions = $select.children('option'),
+				numberOptions = $selectOptions.length,
 				$selectStyled,
 				$list;
 
@@ -37,14 +37,13 @@
 				}));
 
 			$selectStyled = $select.next(settings.classStyled);
-			$selectStyled.text($select.children(STR_OPTION).eq(0).text());
 
 			$list = $('<ul />', {
 				'class': settings.classList.slice(1),
 			}).insertAfter($selectStyled);
 
-			for (var i = 0; i < numberOfOptions; i++) {
-				var $option = $select.children(STR_OPTION).eq(i);
+			for (var i = 0; i < numberOptions; i++) {
+				var $option = $selectOptions.eq(i);
 				$('<li />', {
 					'class': $option.attr('class'),
 					'html':  $option.data('html') || $option.text(),
@@ -53,6 +52,14 @@
 					'tabindex': 0,
 				}).appendTo($list);
 			}
+
+// ???????? how can i use function to send its result as a parameter of another function
+//			updateSelect(function() {
+//				var indexSelected = Math.max(0, $selectOptions.index($(':selected')));
+//				console.log( $list.children('li').eq(indexSelected) );
+//				return $list.children('li').eq(indexSelected);
+//			});
+			updateSelect($list.children('li').eq(Math.max(0, $selectOptions.index($(':selected')))));
 
 			$select.parent(settings.classSelect).focusout(function(event) {
 				if (! this.contains(event.relatedTarget)) {
@@ -82,9 +89,7 @@
 
 			$list.children('li').click(function(event) {
 				event.stopPropagation();
-				$selectStyled.text($(this).text());
-				$select.val($(this).attr('rel')).change();
-				closeSelect();
+				updateSelect($(this));
 			})
 			.keydown(function(event) {
 				var charCode = event.charCode || event.keyCode || event.which;
@@ -96,9 +101,7 @@
 					case 13:
 					case 32:
 						event.stopPropagation();
-						$selectStyled.text($(this).text());
-						$select.val($(this).attr('rel')).change();
-						closeSelect();
+						updateSelect($(this));
 						break;
 				}
 			});
@@ -123,6 +126,12 @@
 				} else {
 					openSelect();
 				}
+			}
+
+			function updateSelect($selectedItem) {
+				$selectStyled.html($selectedItem.html()).attr('style', $selectedItem.attr('style'));  // ??? and class too
+				$select.val($selectedItem.attr('rel')).change();
+				closeSelect();
 			}
 		});
 
