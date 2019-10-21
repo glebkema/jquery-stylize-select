@@ -4,7 +4,7 @@
 	Copyright (c) 2019 Gleb Kemarsky, https://github.com/glebkema
 	Based on https://codepen.io/wallaceerick/pen/ctsCz by Wallace Erick
 	Licensed under the MIT license
-	Version: 0.3.1
+	Version: 0.4.0
 */
 
 (function($) {
@@ -46,8 +46,10 @@
 			for (var i = 0; i < numberOfOptions; i++) {
 				var $option = $select.children(STR_OPTION).eq(i);
 				$('<li />', {
-					'text': $option.text(),
-					'rel':  $option.val(),
+					'class': $option.attr('class'),
+					'html':  $option.data('html') || $option.text(),
+					'rel':   $option.val(),
+					'style': $option.attr('style'),
 					'tabindex': 0,
 				}).appendTo($list);
 			}
