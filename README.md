@@ -18,7 +18,7 @@ Based on [Custom Select Menu](https://codepen.io/wallaceerick/pen/ctsCz), CodePe
 	</select>
 	<div class="custom-select__styled" tabindex="0">Apple</div>
 	<ul class="custom-select__list" style="display: none;">
-		<li rel="apple"  tabindex="0">Apple</li>
+		<li rel="apple"  tabindex="0" class="custom-select__elected">Apple</li>
 		<li rel="banana" tabindex="0">Banana</li>
 		<li rel="carrot" tabindex="0">Carrot</li>
 	</ul>
@@ -26,12 +26,16 @@ Based on [Custom Select Menu](https://codepen.io/wallaceerick/pen/ctsCz), CodePe
 ```
 
 
-| Option      | Default value            | Role                                                                                       |
-| :---        | :---                     | :---                                                                                       |
-| classSelect | `.custom-select`         | CSS class for a `<div>` that wraps the original <select> and the blocks we're going to add |
-| classHidden | classSelect + `__hidden` | CSS class for the original `<select>` to make it hidden                                    |
-| classList   | classSelect + `__list`   | CSS class for a `<ul>` that shows the list of the options for selection                    |
-| classStyled | classSelect + `__styled` | CSS class for a `<div>` that shows the selected option                                     |
+| Option        | Default value              | Role                                                                                       |
+| :---          | :---                       | :---                                                                                       |
+| classSelect   | `.custom-select`           | CSS class for a `<div>` that wraps the original <select> and the blocks we're going to add |
+| classHidden   | classSelect + `__hidden`   | CSS class for the original `<select>` to make it hidden                                    |
+| classList     | classSelect + `__list`     | CSS class for a `<ul>` that shows the list of the options for selection                    |
+| classSelected | classSelect + `__selected` | CSS class for the selected item in the drop-down list                                      |
+| classStyled   | classSelect + `__styled`   | CSS class for a `<div>` that shows the selected option                                     |
+
+
+If the original `<select>` has no selected option yet, the plugin defines the first option as a selected one.
 
 
 ## HTML attributes
