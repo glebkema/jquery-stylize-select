@@ -4,7 +4,7 @@
 	Copyright (c) 2019 Gleb Kemarsky, https://github.com/glebkema
 	Based on https://codepen.io/wallaceerick/pen/ctsCz by Wallace Erick
 	Licensed under the MIT license
-	Version: 0.4.1
+	Version: 0.5.0
 */
 
 (function($) {
@@ -13,10 +13,11 @@
 		var	classSelect = (options && options.classSelect ? options.classSelect :
 				('string' === typeof options ? options : '.custom-select'));
 			settings = $.extend({
-				classSelect: classSelect,               // CSS class for a <div> that wraps the original <select> and the blocks we're going to add
-				classHidden: classSelect + '__hidden',  // CSS class for the original <select> to make it hidden
-				classList:   classSelect + '__list',    // CSS class for a <ul> that shows the list of the options for selection
-				classStyled: classSelect + '__styled',  // CSS class for a <div> that shows the selected option
+				classSelect:   classSelect,                // CSS class for a <div> that wraps the original <select> and the blocks we're going to add
+				classHidden:   classSelect + '__hidden',   // CSS class for the original <select> to make it hidden
+				classList:     classSelect + '__list',     // CSS class for a <ul> that shows the drop-down list of the options for selection
+				classSelected: classSelect + '__selected', // CSS class for the selected item in the drop-down list
+				classStyled:   classSelect + '__styled',   // CSS class for a <div> that shows the selected option
 			}, options ),
 			STR_ACTIVE = 'active';
 
@@ -53,13 +54,10 @@
 				}).appendTo($list);
 			}
 
-// ???????? how can i use function to send its result as a parameter of another function
-//			updateSelect(function() {
-//				var indexSelected = Math.max(0, $selectOptions.index($(':selected')));
-//				console.log( $list.children('li').eq(indexSelected) );
-//				return $list.children('li').eq(indexSelected);
-//			});
-			updateSelect($list.children('li').eq(Math.max(0, $selectOptions.index($(':selected')))));
+			updateSelect(function() {
+				var indexSelected = Math.max(0, $selectOptions.index($(':selected')));
+				return $list.children('li').eq(indexSelected);
+			}());  // NB: ()
 
 			$select.parent(settings.classSelect).focusout(function(event) {
 				if (! this.contains(event.relatedTarget)) {
@@ -129,7 +127,8 @@
 			}
 
 			function updateSelect($selectedItem) {
-				$selectStyled.html($selectedItem.html()).attr('style', $selectedItem.attr('style'));  // ??? and class too
+				$selectStyled.html($selectedItem.html()).attr('style', $selectedItem.attr('style'));  // ??? and the class too
+				$selectedItem.addClass(settings.classSelected.slice(1)).siblings(settings.classSelected).removeClass(settings.classSelected.slice(1));
 				$select.val($selectedItem.attr('rel')).change();
 				closeSelect();
 			}
