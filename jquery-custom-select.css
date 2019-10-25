@@ -3,7 +3,7 @@
   cursor: pointer;
   position: relative; }
   .custom-select__hidden {
-    visibility: hidden;
+    display: none !important;
     position: absolute;
     top: 0;
     right: 0;

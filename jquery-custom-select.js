@@ -4,7 +4,7 @@
 	Copyright (c) 2019 Gleb Kemarsky, https://github.com/glebkema
 	Based on https://codepen.io/wallaceerick/pen/ctsCz by Wallace Erick
 	Licensed under the MIT license
-	Version: 0.5.0
+	Version: 0.5.1
 */
 
 (function($) {
@@ -26,7 +26,8 @@
 				$selectOptions = $select.children('option'),
 				numberOptions = $selectOptions.length,
 				$selectStyled,
-				$list;
+				$list,
+				$listOptions;
 
 			$select.addClass(settings.classHidden.slice(1))
 				.wrap($('<div />', {
@@ -53,10 +54,11 @@
 					'tabindex': 0,
 				}).appendTo($list);
 			}
+			$listOptions = $list.children('li');
 
 			updateSelect(function() {
 				var indexSelected = Math.max(0, $selectOptions.index($(':selected')));
-				return $list.children('li').eq(indexSelected);
+				return $listOptions.eq(indexSelected);
 			}());  // NB: ()
 
 			$select.parent(settings.classSelect).focusout(function(event) {
@@ -72,34 +74,70 @@
 			.keydown(function(event) {
 				var charCode = event.charCode || event.keyCode || event.which;
 				switch (charCode) {
-					case 27:
+					case 27:  // esc
 						event.stopPropagation();
 						closeSelect();
 						break;
-					case 13:
-					case 32:
+					case 13:  // enter
+					case 32:  // space
 						event.preventDefault();
 						event.stopPropagation();
 						toggleSelect();
 						break;
+					case 38:  // arrow up
+						if ($selectStyled.hasClass(STR_ACTIVE)) {
+							event.preventDefault();
+							event.stopPropagation();
+							closeSelect();
+						}
+						break;
+					case 40:  // arrow down
+						event.preventDefault();
+						event.stopPropagation();
+						if ($selectStyled.hasClass(STR_ACTIVE)) {
+							$listOptions.first().focus();;
+						} else {
+							openSelect();
+						}
+						break;
 				}
 			});
 
-			$list.children('li').click(function(event) {
+			$listOptions.click(function(event) {
 				event.stopPropagation();
 				updateSelect($(this));
+				$selectStyled.focus();
 			})
 			.keydown(function(event) {
 				var charCode = event.charCode || event.keyCode || event.which;
 				switch (charCode) {
-					case 27:
+					case 27:  // esc
 						event.stopPropagation();
 						closeSelect();
+						$selectStyled.focus();
 						break;
-					case 13:
-					case 32:
+					case 13:  // enter
+					case 32:  // space
+						event.preventDefault();
 						event.stopPropagation();
 						updateSelect($(this));
+						$selectStyled.focus();
+						break;
+					case 38:  // arrow up
+						event.preventDefault();
+						event.stopPropagation();
+						if ($(this).is(':first-child')) {
+							$selectStyled.focus();
+						} else {
+							$(this).prev().focus();
+						}
+						break;
+					case 40:  // arrow down
+						event.preventDefault();
+						event.stopPropagation();
+						if (! $(this).is(':last-child')) {
+							$(this).next().focus();
+						}
 						break;
 				}
 			});
