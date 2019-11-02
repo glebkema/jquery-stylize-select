@@ -1,8 +1,8 @@
-/**** jquery-custom-select ****/
-.custom-select {
+/**** jquery-stylize-select ****/
+.stylize-select {
   cursor: pointer;
   position: relative; }
-  .custom-select__hidden {
+  .stylize-select__hidden {
     display: none !important;
     position: absolute;
     top: 0;
@@ -11,7 +11,7 @@
     left: 0;
     width: 100%;
     height: 100%; }
-  .custom-select__list {
+  .stylize-select__list {
     display: none;
     list-style: none;
     padding: 0;
@@ -23,12 +23,12 @@
     left: 0;
     width: 100%;
     z-index: 999; }
-    .custom-select__list li {
+    .stylize-select__list li {
       display: block;
       list-style: none;
       margin: 0;
       outline: none !important; }
-      .custom-select__list li[rel=""], .custom-select__list li[rel="hide"] {
+      .stylize-select__list li[rel=""], .stylize-select__list li[rel="hide"] {
         display: none; }
-  .custom-select__styled {
+  .stylize-select__styled {
     position: relative; }
