@@ -1,17 +1,17 @@
-/*
-	jQuery Custom Select Plugin
-	Description: This plugin adds blocks around the selection field and creates the necessary event handlers. You can stylize the look of these blocks using the CSS. The plugin simplifies website development.
-	Copyright (c) 2019 Gleb Kemarsky, https://github.com/glebkema
-	Based on https://codepen.io/wallaceerick/pen/ctsCz by Wallace Erick
-	Licensed under the MIT license
-	Version: 0.5.1
-*/
+/*!
+  * jQuery Stylize Select Plugin
+  * Description: This plugin adds blocks around the selection field and creates the necessary event handlers. You can stylize the look of these blocks using the CSS. The plugin simplifies website development.
+  * Copyright (c) 2019 Gleb Kemarsky, https://github.com/glebkema/jquery-stylize-select
+  * Based on https://codepen.io/wallaceerick/pen/ctsCz by Wallace Erick
+  * Licensed under the MIT license
+  * Version: 0.5.2
+  */
 
 (function($) {
 
-	$.fn.customSelect = function( options ) {
+	$.fn.stylizeSelect = function( options ) {
 		var	classSelect = (options && options.classSelect ? options.classSelect :
-				('string' === typeof options ? options : '.custom-select'));
+				('string' === typeof options ? options : '.stylize-select'));
 			settings = $.extend({
 				classSelect:   classSelect,                // CSS class for a <div> that wraps the original <select> and the blocks we're going to add
 				classHidden:   classSelect + '__hidden',   // CSS class for the original <select> to make it hidden
