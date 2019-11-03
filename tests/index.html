@@ -9,17 +9,30 @@
 	<link rel="stylesheet" href="../dist/jquery-stylize-select.min.css" />
 </head>
 <body>
-	<input type="text" name="previous"></input>
+	<input type="text" name="first"></input>
 
-	<select name="tests" id="tests" class="tests">
-		<option value="0">0. First</option>
-		<option value="1" selected>1. Selected</option>
-		<option value="2" disabled>2. Disabled </option>
-		<option value="3" hidden>3. Hidden</option>
-		<option value="4">4. Last</option>
+	<label for="test1">Label 1</label>
+	<select name="test1" id="test1" class="tests">
+		<option value="0">1.0. First</option>
+		<option value="1" selected>1.1. Selected</option>
+		<option value="2" disabled>1.2. Disabled </option>
+		<option value="3" hidden>1.3. Hidden</option>
+		<option value="4">1.4. Last</option>
 	</select>
 
-	<input type="text" name="next"></input>
+	<input type="text" name="middle"></input>
+
+	<label>Label 2
+	<select name="test2" id="test2" class="tests">
+		<option value="0">2.0. First</option>
+		<option value="1" selected>2.1. Selected</option>
+		<option value="2" disabled>2.2. Disabled </option>
+		<option value="3" hidden>2.3. Hidden</option>
+		<option value="4">2.4. Last</option>
+	</select>
+	</label>
+
+	<input type="text" name="last"></input>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../dist/jquery-stylize-select.min.js"></script>

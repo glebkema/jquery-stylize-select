@@ -1,25 +1,30 @@
 /*!
   * jQuery Stylize Select Plugin
-  * Description: This plugin adds blocks around the selection field and creates the necessary event handlers. You can stylize the look of these blocks using the CSS. The plugin simplifies website development.
+  * Description: This plugin adds HTML blocks around the <select> field and creates the necessary event handlers. All that remains is to style these blocks with CSS.
   * Copyright (c) 2019 Gleb Kemarsky, https://github.com/glebkema/jquery-stylize-select
   * Based on https://codepen.io/wallaceerick/pen/ctsCz by Wallace Erick
   * Licensed under the MIT license
-  * Version: 0.5.2
+  * Version: 0.5.3
   */
 
 (function($) {
 
 	$.fn.stylizeSelect = function( options ) {
-		var	classSelect = (options && options.classSelect ? options.classSelect :
-				('string' === typeof options ? options : '.stylize-select'));
-			settings = $.extend({
-				classSelect:   classSelect,                // CSS class for a <div> that wraps the original <select> and the blocks we're going to add
-				classHidden:   classSelect + '__hidden',   // CSS class for the original <select> to make it hidden
-				classList:     classSelect + '__list',     // CSS class for a <ul> that shows the drop-down list of the options for selection
-				classSelected: classSelect + '__selected', // CSS class for the selected item in the drop-down list
-				classStyled:   classSelect + '__styled',   // CSS class for a <div> that shows the selected option
-			}, options ),
+		var	classSelect,
+			settings,
 			STR_ACTIVE = 'active';
+		if (options && options.classSelect) {
+			classSelect = options.classSelect;
+		} else {
+			classSelect = ('string' === typeof options ? options : '.stylize-select');
+		}
+		settings = $.extend({
+			classSelect:   classSelect,                // CSS class for a <div> that wraps the original <select> and the blocks we're going to add
+			classHidden:   classSelect + '__hidden',   // CSS class for the original <select> to make it hidden
+			classList:     classSelect + '__list',     // CSS class for a <ul> that shows the drop-down list of the options for selection
+			classSelected: classSelect + '__selected', // CSS class for the selected item in the drop-down list
+			classStyled:   classSelect + '__styled',   // CSS class for a <div> that shows the selected option
+		}, options );
 
 		this.each(function() {
 			var	$select = $(this),
@@ -56,10 +61,10 @@
 			}
 			$listOptions = $list.children('li');
 
-			updateSelect(function() {
+			updateSelect((function() {
 				var indexSelected = Math.max(0, $selectOptions.index($(':selected')));
 				return $listOptions.eq(indexSelected);
-			}());  // NB: ()
+			}()));  // NB: ()
 
 			$select.parent(settings.classSelect).focusout(function(event) {
 				if (! this.contains(event.relatedTarget)) {
@@ -67,7 +72,7 @@
 				}
 			});
 
-			$selectStyled.click(function(event) {
+			$selectStyled.click(function() {
 				toggleSelect();
 				return false;  // stopPropagation & stopImmediatePropagation are not enough to prevent the `document.click` event
 			})
@@ -95,7 +100,7 @@
 						event.preventDefault();
 						event.stopPropagation();
 						if ($selectStyled.hasClass(STR_ACTIVE)) {
-							$listOptions.first().focus();;
+							$listOptions.first().focus();
 						} else {
 							openSelect();
 						}
@@ -165,8 +170,11 @@
 			}
 
 			function updateSelect($selectedItem) {
-				$selectStyled.html($selectedItem.html()).attr('style', $selectedItem.attr('style'));  // ??? and the class too
-				$selectedItem.addClass(settings.classSelected.slice(1)).siblings(settings.classSelected).removeClass(settings.classSelected.slice(1));
+				$selectStyled.html($selectedItem.html())
+					.attr('style', $selectedItem.attr('style'));
+				$selectedItem.addClass(settings.classSelected.slice(1))
+					.siblings(settings.classSelected)
+					.removeClass(settings.classSelected.slice(1));
 				$select.val($selectedItem.attr('rel')).change();
 				closeSelect();
 			}

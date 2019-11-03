@@ -7,7 +7,7 @@ The CSS file contains only the properties required for the functioning of the dr
 Based on [Custom Select Menu](https://codepen.io/wallaceerick/pen/ctsCz), CodePen by [Wallace Erick](https://codepen.io/wallaceerick).
 
 
-## The plugin creates 3 blocks and uses 4 style classes
+## The plugin creates 3 blocks and uses 5 style classes
 
 ```html
 <div class="stylize-select">
@@ -41,6 +41,8 @@ If the original `<select>` has no selected option yet, the plugin defines the fi
 ## HTML attributes
 
 The plugin copies the `class` and `style` attributes from each `<option>` tag to the corresponding `<li>` tag as is.
+
+Also, when the user selects an option, the plugin copies the `style` attribute from the option to the main field. The `class` attribute of the option will not be copied.
 
 If `<option>` tag has the `data-html` attribute. then the plugin places this HTML as a content of the depending `<li>` tag.
 
