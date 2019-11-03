@@ -9,6 +9,7 @@ module.exports = function(options) {
 	return function() {
 		return multipipe(
 			gulp.src(options.src, {since: gulp.lastRun(options.taskName)}),
+		//	$.gulp-eslint-auto-fix(),
 			$.debug({title: options.taskName}),
 			gulp.dest(options.dest)
 		).on('error', $.notify.onError());

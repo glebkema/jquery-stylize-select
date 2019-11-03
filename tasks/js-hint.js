@@ -11,7 +11,7 @@ module.exports = function(options) {
 			gulp.src(options.src, {since: gulp.lastRun(options.taskName)}),
 			$.jshint(),
 			$.jshint.reporter('jshint-stylish'),
-			//$.jshint.reporter('fail'),
+			//$.jshint.reporter('fail'),  // https://www.npmjs.com/package/gulp-jshint
 			$.debug({title: options.taskName})
 		).on('error', $.notify.onError());
 	};

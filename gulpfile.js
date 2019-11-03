@@ -39,12 +39,18 @@ lazyRequireTask(TASK_JS, {
 	dest:  DIR_DEST,
 });
 
+lazyRequireTask(TASK_JS + ':build', {
+	src:   SRC_JS,
+	dest:  DIR_DEST,
+});
+
 lazyRequireTask(TASK_JS + ':hint', {
 	src:   SRC_JS,
 });
 
 lazyRequireTask(TASK_JS + ':lint', {
 	src:   SRC_JS,
+	dest:  DIR_DEST,
 	cacheFilePath: process.cwd() + '/tmp/lintCache.json',
 });
 
@@ -53,7 +59,8 @@ lazyRequireTask(TASK_JS + ':min', {
 	dest:  DIR_DEST,
 });
 
-gulp.task(TASK_BUILD, gulp.parallel(TASK_CSS, TASK_CSS + ':min', TASK_JS, TASK_JS + ':min'));
+//gulp.task(TASK_BUILD, gulp.parallel(TASK_CSS, TASK_CSS + ':min', gulp.series(TASK_JS + ':lint', TASK_JS, TASK_JS + ':min')));
+gulp.task(TASK_BUILD, gulp.parallel(TASK_CSS, TASK_CSS + ':min', TASK_JS + ':build'));
 
 lazyRequireTask(TASK_SERVE, {
 	server: {
@@ -64,7 +71,8 @@ lazyRequireTask(TASK_SERVE, {
 
 gulp.task(TASK_WATCH, function() {
 	gulp.watch(SRC_CSS,  gulp.parallel(TASK_CSS, TASK_CSS + ':min'));
-	gulp.watch(SRC_JS,   gulp.parallel(TASK_JS, TASK_JS + ':min'));
+//	gulp.watch(SRC_JS,   gulp.series(TASK_JS + ':lint', TASK_JS, TASK_JS + ':min'));
+	gulp.watch(SRC_JS,   TASK_JS + ':build');
 });
 
 gulp.task(TASK_LIVE, gulp.parallel(TASK_WATCH, TASK_SERVE));

@@ -6,6 +6,10 @@ const through2 = require('through2').obj;
 const fs = require('fs');
 const multipipe = require('multipipe');
 
+function isFixed(file) {
+    return file.eslint != null && file.eslint.fixed;  // has ESLint fixed the file contents?
+}
+
 module.exports = function(options) {
 
 	return function() {
@@ -32,7 +36,10 @@ module.exports = function(options) {
 						file.contents = fs.readFileSync(file.path);
 						callback(null, file);
 					}),
-					$.eslint(),
+					$.eslint({ fix: true }),  // https://stackoverflow.com/a/37108027/6263942
+//	how to use?		$.eslint.format(),
+//	how to use?		$.if(isFixed, gulp.dest(options.dest)),
+					$.eslint.failAfterError(),
 					through2(function(file, enc, callback) {
 						eslintResults[file.path] = {
 							eslint: file.eslint,
@@ -49,4 +56,3 @@ module.exports = function(options) {
 	};
 
 };
-	
