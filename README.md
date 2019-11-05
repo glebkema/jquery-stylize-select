@@ -7,33 +7,35 @@ The CSS file contains only the properties required for the functioning of the dr
 Based on [Custom Select Menu](https://codepen.io/wallaceerick/pen/ctsCz), CodePen by [Wallace Erick](https://codepen.io/wallaceerick).
 
 
-## The plugin creates 3 blocks and uses 5 style classes
+## The plugin creates 3 blocks and uses 6 style classes
 
 ```html
 <div class="stylize-select">
-	<select class="your-select-field stylize-select__hidden">
-		<option value="apple" selected>Apple</option>
-		<option value="banana">Banana</option>
-		<option value="carrot">Carrot</option>
+	<select class="your-select-field" style="display: none;">
+		<option value="apple">Apple</option>
+		<option value="banana" selected>Banana</option>
+		<option value="carrot" disabled>Carrot</option>
+		<option value="grape" hidden>Grape</option>
 	</select>
 	<div class="stylize-select__styled" tabindex="0">Apple</div>
 	<ul class="stylize-select__list" style="display: none;">
-		<li rel="apple"  tabindex="0" class="stylize-select__elected">Apple</li>
-		<li rel="banana" tabindex="0">Banana</li>
-		<li rel="carrot" tabindex="0">Carrot</li>
+		<li rel="apple"  tabindex="0">Apple</li>
+		<li rel="banana" tabindex="0" class="stylize-select__selected">Banana</li>
+		<li rel="carrot" tabindex="0" class="stylize-select__disabled">Carrot</li>
+		<li rel="grape" tabindex="0" class="stylize-select__hidden">Grape</li>
 	</ul>
 </div>
 ```
 
 
-| Option        | Default value              | Role                                                                                       |
-| :---          | :---                       | :---                                                                                       |
-| classSelect   | `.stylize-select`          | CSS class for a `<div>` that wraps the original <select> and the blocks we're going to add |
-| classHidden   | classSelect + `__hidden`   | CSS class for the original `<select>` to make it hidden                                    |
-| classList     | classSelect + `__list`     | CSS class for a `<ul>` that shows the list of the options for selection                    |
-| classSelected | classSelect + `__selected` | CSS class for the selected item in the drop-down list                                      |
-| classStyled   | classSelect + `__styled`   | CSS class for a `<div>` that shows the selected option                                     |
-
+| Option        | Default value              | CSS class for                                                                   |
+| :---          | :---                       | :---                                                                            |
+| classSelect   | `.stylize-select`          | main `<div>` that wraps the original <select> and the blocks we're going to add |
+| classHidden   | classSelect + `__disabled` | the disabled item in the drop-down list                                         |
+| classHidden   | classSelect + `__hidden`   | the hidden item in the drop-down list                                           |
+| classList     | classSelect + `__list`     | a `<ul>` that shows the list of the options for selection                       |
+| classSelected | classSelect + `__selected` | the selected item in the drop-down list                                         |
+| classStyled   | classSelect + `__styled`   | a `<div>` that shows the selected option                                        |
 
 If the original `<select>` has no selected option yet, the plugin defines the first option as a selected one.
 

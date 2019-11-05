@@ -4,7 +4,7 @@
   * Copyright (c) 2019 Gleb Kemarsky, https://github.com/glebkema/jquery-stylize-select
   * Based on https://codepen.io/wallaceerick/pen/ctsCz by Wallace Erick
   * Licensed under the MIT license
-  * Version: 0.5.4
+  * Version: 0.5.5
   */
 
 (function($) {
@@ -177,7 +177,10 @@
 			function updateSelect($selectedItem) {
 				if (! $selectedItem.hasClass(settings.classDisabled.slice(1))) {
 					$selectStyled.html($selectedItem.html())
-						.attr('style', $selectedItem.attr('style'));
+						.attr('style', function() {
+							var newStyle = $selectedItem.attr('style');
+							return ( newStyle ? newStyle : null );
+						});
 					$selectedItem.addClass(settings.classSelected.slice(1))
 						.siblings(settings.classSelected)
 						.removeClass(settings.classSelected.slice(1));
