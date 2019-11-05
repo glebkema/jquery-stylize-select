@@ -7,7 +7,7 @@ jQuery(document).ready(function($) {
 	}
 
 	$tests.change(function() {
-		console.log($(this).attr('id'), 'change', $(this).find(":selected").text());
+		console.log($(this).attr('id'), 'changes to "' + $(this).find(":selected").text() + '"');
 	});
 
 });

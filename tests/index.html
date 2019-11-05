@@ -10,7 +10,9 @@
 	<link rel="stylesheet" href="../tests/tests.css" />
 </head>
 <body>
-	<input type="text" name="first"></input>
+	<label>Simple input field to check the <kbd>Tab</kbd>
+		<input type="text" name="first"></input>
+	</label>
 
 	<label for="test1">Label 1</label>
 	<select name="test1" id="test1" class="tests">
@@ -21,19 +23,22 @@
 		<option value="4">1.4. Last</option>
 	</select>
 
-	<input type="text" name="middle"></input>
-
-	<label>Label 2
-	<select name="test2" id="test2" class="tests">
-		<option value="0">2.0. First</option>
-		<option value="1" selected>2.1. Selected</option>
-		<option value="2" disabled>2.2. Disabled </option>
-		<option value="3" hidden>2.3. Hidden</option>
-		<option value="4">2.4. Last</option>
-	</select>
+	<label>Check one more field on the same page + Check <code>select</code> inside <code>label</code>
+		<select name="test2" id="test2" class="tests">
+			<option value="0">2.0. First</option>
+			<option value="1" selected>2.1. Selected</option>
+			<option value="2" disabled>2.2. Disabled </option>
+			<option value="3" hidden>2.3. Hidden</option>
+			<option value="4">2.4. Last</option>
+		</select>
 	</label>
 
-	<input type="text" name="last"></input>
+	<label for="test3">Check the <code>style</code> attribute <a href="https://github.com/glebkema/jquery-stylize-select/issues/20">#20</a></label>
+	<select name="test3" id="test3" class="tests">
+		<option value="0">Without the style attribute</option>
+		<option value="1" style="font-weight:bold; color:green;">Green</option>
+		<option value="2" style="font-weight:bold; color:orange;">Orange</option>
+	</select>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../dist/jquery-stylize-select.min.js"></script>
