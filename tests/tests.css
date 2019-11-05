@@ -1,0 +1,23 @@
+body {
+	font: 20px / 1.7 Helvetica, "sans-serif";
+	padding: 30px 45px;
+}
+
+.stylize-select__list > li:focus,
+.stylize-select__list > li:hover {
+	color: #63f;
+}
+
+.stylize-select__disabled {
+	background-color: #ccc;
+	color: #666;
+}
+
+.stylize-select__selected {
+	background-color: #f9c;
+	color: #603;
+}
+
+.stylize-select__styled {
+	outline: none !important;
+}

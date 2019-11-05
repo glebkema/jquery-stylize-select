@@ -4,7 +4,7 @@
   * Copyright (c) 2019 Gleb Kemarsky, https://github.com/glebkema/jquery-stylize-select
   * Based on https://codepen.io/wallaceerick/pen/ctsCz by Wallace Erick
   * Licensed under the MIT license
-  * Version: 0.5.3
+  * Version: 0.5.4
   */
 
 (function($) {
@@ -18,12 +18,14 @@
 		} else {
 			classSelect = ('string' === typeof options ? options : '.stylize-select');
 		}
-		settings = $.extend({
-			classSelect:   classSelect,                // CSS class for a <div> that wraps the original <select> and the blocks we're going to add
-			classHidden:   classSelect + '__hidden',   // CSS class for the original <select> to make it hidden
-			classList:     classSelect + '__list',     // CSS class for a <ul> that shows the drop-down list of the options for selection
-			classSelected: classSelect + '__selected', // CSS class for the selected item in the drop-down list
-			classStyled:   classSelect + '__styled',   // CSS class for a <div> that shows the selected option
+		settings = $.extend({                          // CSS classes:
+			classSelect:   classSelect,                // main <div> that wraps the original <select> and all blocks we add
+		//	classSelectAdd: '',                        // modify the main <div>
+			classDisabled: classSelect + '__disabled', // the disabled item in the drop-down list
+			classHidden:   classSelect + '__hidden',   // the hidden item in the drop-down list
+			classList:     classSelect + '__list',     // <ul> that shows the drop-down list of the options for selection
+			classSelected: classSelect + '__selected', // the selected item in the drop-down list
+			classStyled:   classSelect + '__styled',   // <div> that shows the selected option
 		}, options );
 
 		this.each(function() {
@@ -34,9 +36,10 @@
 				$list,
 				$listOptions;
 
-			$select.addClass(settings.classHidden.slice(1))
+			$select.hide()
 				.wrap($('<div />', {
 					'class': settings.classSelect.slice(1),
+				//	'class': (settings.classSelect.slice(1) + ' ' + settings.classSelectAdd.slice(1)).trim(),
 				}))
 				.after($('<div />', {
 					'class': settings.classStyled.slice(1),
@@ -52,7 +55,9 @@
 			for (var i = 0; i < numberOptions; i++) {
 				var $option = $selectOptions.eq(i);
 				$('<li />', {
-					'class': $option.attr('class'),
+					'class': (($option.attr('class') ? $option.attr('class') : '')+
+						($option.prop('disabled') ? ' ' + settings.classDisabled.slice(1) : '') +
+						($option.prop('hidden') ? ' ' + settings.classHidden.slice(1) : '')).trim(),
 					'html':  $option.data('html') || $option.text(),
 					'rel':   $option.val(),
 					'style': $option.attr('style'),
@@ -62,7 +67,7 @@
 			$listOptions = $list.children('li');
 
 			updateSelect((function() {
-				var indexSelected = Math.max(0, $selectOptions.index($(':selected')));
+				var indexSelected = Math.max(0, $select.prop('selectedIndex'));  // https://stackoverflow.com/a/13556979/6263942
 				return $listOptions.eq(indexSelected);
 			}()));  // NB: ()
 
@@ -170,13 +175,15 @@
 			}
 
 			function updateSelect($selectedItem) {
-				$selectStyled.html($selectedItem.html())
-					.attr('style', $selectedItem.attr('style'));
-				$selectedItem.addClass(settings.classSelected.slice(1))
-					.siblings(settings.classSelected)
-					.removeClass(settings.classSelected.slice(1));
-				$select.val($selectedItem.attr('rel')).change();
-				closeSelect();
+				if (! $selectedItem.hasClass(settings.classDisabled.slice(1))) {
+					$selectStyled.html($selectedItem.html())
+						.attr('style', $selectedItem.attr('style'));
+					$selectedItem.addClass(settings.classSelected.slice(1))
+						.siblings(settings.classSelected)
+						.removeClass(settings.classSelected.slice(1));
+					$select.val($selectedItem.attr('rel')).change();
+					closeSelect();
+				}
 			}
 		});
 
