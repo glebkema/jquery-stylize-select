@@ -72,7 +72,7 @@ lazyRequireTask(TASK_SERVE, {
 gulp.task(TASK_WATCH, function() {
 	gulp.watch(SRC_CSS,  gulp.parallel(TASK_CSS, TASK_CSS + ':min'));
 //	gulp.watch(SRC_JS,   gulp.series(TASK_JS + ':lint', TASK_JS, TASK_JS + ':min'));
-	gulp.watch(SRC_JS,   TASK_JS + ':build');
+	gulp.watch(SRC_JS,   gulp.parallel(TASK_JS + ':build'));
 });
 
 gulp.task(TASK_LIVE, gulp.parallel(TASK_WATCH, TASK_SERVE));

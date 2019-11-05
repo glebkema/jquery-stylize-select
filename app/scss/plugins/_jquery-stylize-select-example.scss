@@ -1,0 +1,84 @@
+
+/**** jquery-stylize-select. design example ****/
+$stylize-select__padding-x: .75rem;
+$stylize-select__padding-top: .875rem;
+$stylize-select__padding-bottom: $stylize-select__padding-top * 1.15;
+
+$stylize-select__icon-size: .9375rem;
+$stylize-select__shadow-size: .125rem;
+$stylize-select__option-y: $stylize-select__padding-top / 2;
+$stylize-select__option-y-edge: round($stylize-select__option-y * 1.35 * 10) / 10;
+
+.stylize-select {
+	&__list {
+		background: $color__background-field-hover;
+		border: 1px solid $color__border-input-focus;
+		border-top: none;
+		border-radius: $stylize-select__border-radius;
+		box-shadow: 0 $stylize-select__shadow-size (2 * $stylize-select__shadow-size) $stylize-select__shadow-size rgba($color__background-body, .5);
+		color: $color__text-field;
+
+		li {
+			@include transitions-sharp( background color );
+			padding: $stylize-select__option-y $stylize-select__padding-x;
+
+			&:focus,
+			&:hover {
+				background: $color__background-button-hover;  // NB: button
+				color: $color__text-button;
+			}
+
+			&:nth-child(2) {
+				padding-top: $stylize-select__option-y-edge;
+			}
+
+			&:last-child {
+				padding-bottom: $stylize-select__option-y-edge;
+			}
+		}
+	}
+
+	&__styled {
+		@include transitions-smooth-sharp( background border );
+		background: $color__background-field;
+		border: 1px solid $color__border-input;
+		border-radius: $stylize-select__border-radius;
+		color: $color__text-field;
+		height: auto !important;
+		line-height: $line-height__field;
+		max-width: 100%;
+		outline: none !important;
+		padding: $stylize-select__padding-top $stylize-select__padding-x $stylize-select__padding-bottom !important;
+		width: 100%;
+
+		&:after {
+			cursor: pointer;
+			color: $color__link;
+			content: '\f078';  // https://fontawesome.com/v4.7.0/icon/chevron-down/
+			display: block;
+			font: normal normal normal #{$stylize-select__icon-size}/1 FontAwesome;
+			margin-top: - $stylize-select__icon-size / 2;
+			position: absolute; top: 50%; right: 1rem;
+			text-rendering: auto;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+
+		&:active, &.active {
+			background: $color__background-field-hover;
+
+			&:after {
+				content: '\f077';  // https://fontawesome.com/v4.7.0/icon/chevron-up/
+			}
+		}
+
+		&:focus {
+			background: $color__background-field-focus !important;
+			border-color: $color__border-input-focus;
+		}
+
+		&:hover {
+			background: $color__background-field-hover;
+		}
+	}
+}

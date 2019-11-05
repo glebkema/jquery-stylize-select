@@ -1,0 +1,47 @@
+
+/**** jquery-stylize-select ****/
+// This file contains only the properties required for the functioning of the drop-down list and the field with the selection result.
+// You need to stylize them yourself.
+
+$stylize-select__z-index: 999 !default;
+
+.stylize-select {
+	cursor: pointer;
+	position: relative;
+
+	&__disabled {
+		cursor: not-allowed;
+	}
+
+	&__hidden {
+		display: none !important;
+	}
+
+	&__list {
+		display: none;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+		position: absolute; top: 100%; right: 0; left: 0;
+		width: 100%;
+		z-index: $stylize-select__z-index;
+
+		li {
+			display: block;
+			list-style: none;
+			margin: 0;
+			outline: none !important;
+
+		//	&:first-child,  // if you need to hide the first option in the list
+			&[rel=""],
+			&[rel="hide"] {
+				display: none;
+			}
+		}
+	}
+
+	&__styled {
+		position: relative;  // to stay over absolute positioned &__hidden
+	}
+}
