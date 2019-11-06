@@ -6,9 +6,9 @@ const through2 = require('through2').obj;
 const fs = require('fs');
 const multipipe = require('multipipe');
 
-function isFixed(file) {
-    return file.eslint != null && file.eslint.fixed;  // has ESLint fixed the file contents?
-}
+//	function isFixed(file) {
+//		return file.eslint != null && file.eslint.fixed;  // has ESLint fixed the file contents?
+//	}
 
 module.exports = function(options) {
 

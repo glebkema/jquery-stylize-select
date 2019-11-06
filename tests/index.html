@@ -14,6 +14,10 @@
 		<input type="text" name="first"></input>
 	</label>
 
+	<label for="test0">Empty list <a href="https://github.com/glebkema/jquery-stylize-select/issues/24">#24</a></label>
+	<select name="test0" id="test1" class="tests">
+	</select>
+
 	<label for="test1">Label 1</label>
 	<select name="test1" id="test1" class="tests">
 		<option value="0">1.0. First</option>
@@ -38,6 +42,17 @@
 		<option value="0">Without the style attribute</option>
 		<option value="1" style="font-weight:bold; color:green;">Green</option>
 		<option value="2" style="font-weight:bold; color:orange;">Orange</option>
+	</select>
+
+	<label for="test4">Check moving by arrows <kbd>Up</kbd> and <kbd>Down</kbd> on the hidden and disabled options <a href="https://github.com/glebkema/jquery-stylize-select/issues/22">#22</a>.
+	<br>Check auto selection when no option is selected<a href="https://github.com/glebkema/jquery-stylize-select/issues/23">#23</a>.</label>
+	<select name="test4" id="test4" class="tests">
+		<option value="0" hidden disabled>Hidden</option>
+		<option value="1" disabled>Disabled</option>
+		<option value="2">2</option>
+		<option value="3" hidden>Hidden</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
 	</select>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

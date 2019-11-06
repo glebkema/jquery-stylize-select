@@ -27,7 +27,6 @@ Based on [Custom Select Menu](https://codepen.io/wallaceerick/pen/ctsCz), CodePe
 </div>
 ```
 
-
 | Option        | Default value              | CSS class for                                                                   |
 | :---          | :---                       | :---                                                                            |
 | classSelect   | `.stylize-select`          | main `<div>` that wraps the original <select> and the blocks we're going to add |
@@ -36,6 +35,8 @@ Based on [Custom Select Menu](https://codepen.io/wallaceerick/pen/ctsCz), CodePe
 | classList     | classSelect + `__list`     | a `<ul>` that shows the list of the options for selection                       |
 | classSelected | classSelect + `__selected` | the selected item in the drop-down list                                         |
 | classStyled   | classSelect + `__styled`   | a `<div>` that shows the selected option                                        |
+
+When the drop-down list opens, the styled field gets the `.active` class. Thus, you can style this state with a combination of two styles. For example, using `.stylize-select__styled.active` if the website uses the default values ​​for the options.
 
 If the original `<select>` has no selected option yet, the plugin defines the first option as a selected one.
 
