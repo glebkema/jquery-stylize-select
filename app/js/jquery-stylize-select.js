@@ -4,7 +4,7 @@
   * Copyright (c) 2019 Gleb Kemarsky, https://github.com/glebkema/jquery-stylize-select
   * Based on https://codepen.io/wallaceerick/pen/ctsCz by Wallace Erick
   * Licensed under the MIT license
-  * Version: 0.5.5
+  * Version: 0.5.6
   */
 
 (function($) {
@@ -67,8 +67,8 @@
 			$listOptions = $list.children('li');
 
 			updateSelect((function() {
-				var indexSelected = Math.max(0, $select.prop('selectedIndex'));  // https://stackoverflow.com/a/13556979/6263942
-				return $listOptions.eq(indexSelected);
+				var indexSelected = $select.prop('selectedIndex');  // https://stackoverflow.com/a/13556979/6263942
+				return (indexSelected < 0 ? null : $listOptions.eq(indexSelected));
 			}()));  // NB: ()
 
 			$select.parent(settings.classSelect).focusout(function(event) {
@@ -105,7 +105,7 @@
 						event.preventDefault();
 						event.stopPropagation();
 						if ($selectStyled.hasClass(STR_ACTIVE)) {
-							$listOptions.first().focus();
+							$listOptions.not(':hidden').first().focus();
 						} else {
 							openSelect();
 						}
@@ -119,7 +119,8 @@
 				$selectStyled.focus();
 			})
 			.keydown(function(event) {
-				var charCode = event.charCode || event.keyCode || event.which;
+				var $next, $prev,
+					charCode = event.charCode || event.keyCode || event.which;
 				switch (charCode) {
 					case 27:  // esc
 						event.stopPropagation();
@@ -136,17 +137,19 @@
 					case 38:  // arrow up
 						event.preventDefault();
 						event.stopPropagation();
-						if ($(this).is(':first-child')) {
-							$selectStyled.focus();
+						$prev = $(this).prevAll(':visible:first');  // prev() has a problem with hidden options
+						if ($prev.length) {
+							$prev.focus();
 						} else {
-							$(this).prev().focus();
+							$selectStyled.focus();
 						}
 						break;
 					case 40:  // arrow down
 						event.preventDefault();
 						event.stopPropagation();
-						if (! $(this).is(':last-child')) {
-							$(this).next().focus();
+						$next = $(this).nextAll(':visible:first');
+						if ($next.length) {
+							$next.focus();
 						}
 						break;
 				}
@@ -175,7 +178,7 @@
 			}
 
 			function updateSelect($selectedItem) {
-				if (! $selectedItem.hasClass(settings.classDisabled.slice(1))) {
+				if ($selectedItem && ! $selectedItem.hasClass(settings.classDisabled.slice(1))) {
 					$selectStyled.html($selectedItem.html())
 						.attr('style', function() {
 							var newStyle = $selectedItem.attr('style');

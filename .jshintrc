@@ -1,7 +1,4 @@
 {
-	"browser": true,
-	"devel": true,
-	"jquery": true,
 	"boss": true,
 	"curly": true,
 	"eqeqeq": true,
@@ -13,5 +10,9 @@
 	"smarttabs": true,
 	"trailing": true,
 	"undef": true,
-	"unused": true
+	"unused": true,
+
+	"browser": true,
+	"devel": true,
+	"jquery": true
 }

@@ -3,6 +3,10 @@ body {
 	padding: 30px 45px;
 }
 
+label {
+	display: block;
+}
+
 .stylize-select {
 	background-color: #eee;
 	border: 1px solid #ccc;
@@ -16,9 +20,12 @@ body {
 	opacity: .85;
 }
 
+.stylize-select__styled:focus,
+.stylize-select__styled:hover,
 .stylize-select__list > li:focus,
 .stylize-select__list > li:hover {
-	color: #63f;
+	background-color: blue !important;
+	color: white !important;
 }
 
 .stylize-select__disabled {

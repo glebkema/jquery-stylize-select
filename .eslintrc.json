@@ -1,8 +1,10 @@
 {
 	"env": {
 		"browser": true,
-		"console": true,
 		"jquery": true
 	},
-	"extends": "jquery"
+	"extends": "jquery",
+    "rules": {
+        "no-console": "off"
+	}
 }
