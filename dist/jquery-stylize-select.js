@@ -2,9 +2,8 @@
   * jQuery Stylize Select Plugin
   * Description: This plugin adds HTML blocks around the <select> field and creates the necessary event handlers. All that remains is to style these blocks with CSS.
   * Copyright (c) 2019 Gleb Kemarsky, https://github.com/glebkema/jquery-stylize-select
-  * Based on https://codepen.io/wallaceerick/pen/ctsCz by Wallace Erick
   * Licensed under the MIT license
-  * Version: 0.5.6
+  * Version: 0.5.7
   */
 
 (function($) {
@@ -16,7 +15,7 @@
 		if (options && options.classSelect) {
 			classSelect = options.classSelect;
 		} else {
-			classSelect = ("string" === typeof options ? options : ".stylize-select");
+			classSelect = ("string" === typeof options ? options : $.fn.stylizeSelect.defaults.classSelect);
 		}
 		settings = $.extend({                          // CSS classes:
 			classSelect:   classSelect,                // main <div> that wraps the original <select> and all blocks we add
@@ -36,7 +35,8 @@
 				$list,
 				$listOptions;
 
-			$select.hide()
+			$select
+				.hide()
 				.wrap($("<div />", {
 					"class": settings.classSelect.slice(1),
 				//	"class": (settings.classSelect.slice(1) + " " + settings.classSelectAdd.slice(1)).trim(),
@@ -66,94 +66,109 @@
 			}
 			$listOptions = $list.children("li");
 
-			updateSelect((function() {
-				var indexSelected = $select.prop("selectedIndex");  // https://stackoverflow.com/a/13556979/6263942
-				return (indexSelected < 0 ? null : $listOptions.eq(indexSelected));
-			}()));  // NB: ()
+			$select
+				.change(function() {
+					if (this.selectedIndex > -1) {  // or $(this).prop("selectedIndex")
+						var $selectedOption = $list.children("[rel=\"" + $(this).val() + "\"]");
+						if ($selectedOption) {
+							$selectStyled
+								.html($selectedOption.html())
+								.attr("style", function() {
+									var newStyle = $selectedOption.attr("style");
+									return ( newStyle ? newStyle : null );
+								});
+							$selectedOption.addClass(settings.classSelected.slice(1))
+								.siblings(settings.classSelected)
+								.removeClass(settings.classSelected.slice(1));
+						}
+					}
+				})
+				.change();  // put the initial content in $selectStyled
 
-			$select.parent(settings.classSelect).focusout(function(event) {
-				if (! this.contains(event.relatedTarget)) {
-					closeSelect();
-				}
-			});
-
-			$selectStyled.click(function() {
-				toggleSelect();
-				return false;  // stopPropagation & stopImmediatePropagation are not enough to prevent the `document.click` event
-			})
-			.keydown(function(event) {
-				var charCode = event.charCode || event.keyCode || event.which;
-				switch (charCode) {
-					case 27:  // esc
-						event.stopPropagation();
+			$select.parent(settings.classSelect)
+				.focusout(function(event) {
+					if (! this.contains(event.relatedTarget)) {
 						closeSelect();
-						break;
-					case 13:  // enter
-					case 32:  // space
-						event.preventDefault();
-						event.stopPropagation();
-						toggleSelect();
-						break;
-					case 38:  // arrow up
-						if ($selectStyled.hasClass(STR_ACTIVE)) {
-							event.preventDefault();
+					}
+				});
+
+			$selectStyled
+				.click(function() {
+					toggleSelect();
+					return false;  // stopPropagation & stopImmediatePropagation don`t prevent the document.click` event
+				})
+				.keydown(function(event) {
+					var charCode = event.charCode || event.keyCode || event.which;
+					switch (charCode) {
+						case 27:  // escape
 							event.stopPropagation();
 							closeSelect();
-						}
-						break;
-					case 40:  // arrow down
-						event.preventDefault();
-						event.stopPropagation();
-						if ($selectStyled.hasClass(STR_ACTIVE)) {
-							$listOptions.not(":hidden").first().focus();
-						} else {
-							openSelect();
-						}
-						break;
-				}
-			});
+							break;
+						case 13:  // enter
+						case 32:  // space
+							event.preventDefault();
+							event.stopPropagation();
+							toggleSelect();
+							break;
+						case 38:  // arrow up
+							if ($selectStyled.hasClass(STR_ACTIVE)) {
+								event.preventDefault();
+								event.stopPropagation();
+								closeSelect();
+							}
+							break;
+						case 40:  // arrow down
+							event.preventDefault();
+							event.stopPropagation();
+							if ($selectStyled.hasClass(STR_ACTIVE)) {
+								$listOptions.filter(":visible").first().focus();
+							} else {
+								openSelect();
+							}
+							break;
+					}
+				});
 
-			$listOptions.click(function(event) {
-				event.stopPropagation();
-				updateSelect($(this));
-				$selectStyled.focus();
-			})
-			.keydown(function(event) {
-				var $next, $prev,
-					charCode = event.charCode || event.keyCode || event.which;
-				switch (charCode) {
-					case 27:  // esc
-						event.stopPropagation();
-						closeSelect();
-						$selectStyled.focus();
-						break;
-					case 13:  // enter
-					case 32:  // space
-						event.preventDefault();
-						event.stopPropagation();
-						updateSelect($(this));
-						$selectStyled.focus();
-						break;
-					case 38:  // arrow up
-						event.preventDefault();
-						event.stopPropagation();
-						$prev = $(this).prevAll(":visible:first");  // prev() has a problem with hidden options
-						if ($prev.length) {
-							$prev.focus();
-						} else {
+			$listOptions
+				.click(function(event) {
+					event.stopPropagation();
+					performSelect($(this));
+				})
+				.keydown(function(event) {
+					var $next, $prev,
+						charCode = event.charCode || event.keyCode || event.which;
+					switch (charCode) {
+						case 27:  // escape
+							event.stopPropagation();
+							closeSelect();
 							$selectStyled.focus();
-						}
-						break;
-					case 40:  // arrow down
-						event.preventDefault();
-						event.stopPropagation();
-						$next = $(this).nextAll(":visible:first");
-						if ($next.length) {
-							$next.focus();
-						}
-						break;
-				}
-			});
+							break;
+						case 13:  // enter
+						case 32:  // space
+							event.preventDefault();
+							event.stopPropagation();
+							performSelect($(this));
+							break;
+						case 38:  // arrow up
+							event.preventDefault();
+							event.stopPropagation();
+							$prev = $(this).prevAll(":visible:first");  // prev() has a problem with hidden options
+							if ($prev.length) {
+								$prev.focus();
+							} else {
+								$selectStyled.focus();
+							}
+							break;
+						case 40:  // arrow down
+							event.preventDefault();
+							event.stopPropagation();
+							$next = $(this).nextAll(":visible:first");
+							if ($next.length) {
+								$next.focus();
+							}
+							break;
+					}
+				});
 
 			$(document).click(closeSelect);
 
@@ -169,6 +184,12 @@
 				$selectStyled.toggleClass(STR_ACTIVE).next(settings.classList).toggle();
 			}
 
+			function performSelect($newOption) {
+				updateSelect($newOption);
+				closeSelect();
+				$selectStyled.focus();
+			}
+
 			function toggleSelect() {
 				if ($selectStyled.hasClass(STR_ACTIVE)) {
 					closeSelect();
@@ -177,23 +198,18 @@
 				}
 			}
 
-			function updateSelect($selectedItem) {
-				if ($selectedItem && ! $selectedItem.hasClass(settings.classDisabled.slice(1))) {
-					$selectStyled.html($selectedItem.html())
-						.attr("style", function() {
-							var newStyle = $selectedItem.attr("style");
-							return ( newStyle ? newStyle : null );
-						});
-					$selectedItem.addClass(settings.classSelected.slice(1))
-						.siblings(settings.classSelected)
-						.removeClass(settings.classSelected.slice(1));
-					$select.val($selectedItem.attr("rel")).change();
-					closeSelect();
+			function updateSelect($newOption) {
+				if ($newOption && ! $newOption.hasClass(settings.classDisabled.slice(1))) {
+					$select.val($newOption.attr("rel")).change();  // run event handlers for the `change` event
 				}
 			}
 		});
 
 		return this;
+	};
+
+	$.fn.stylizeSelect.defaults = {
+		classSelect: ".stylize-select",
 	};
 
 }( jQuery ));

@@ -1,10 +1,14 @@
 # jQuery Stylize Select Plugin
 
+![GitHub last commit](https://img.shields.io/github/last-commit/glebkema/jquery-stylize-select)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/glebkema/jquery-stylize-select)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/glebkema/jquery-stylize-select?include_prereleases)
+
 The drop-down list for the select field itself is almost not styled. This plugin adds blocks around it and creates the necessary event handlers. So you can stylize the look of these blocks using the CSS. The plugin simplifies website development.
 
 The CSS file contains only the properties required for the functioning of the drop-down list and the field with the selection result. You need to stylize them yourself.
 
-Based on [Custom Select Menu](https://codepen.io/wallaceerick/pen/ctsCz), CodePen by [Wallace Erick](https://codepen.io/wallaceerick).
+Inspired by [Wallace Erick](https://codepen.io/wallaceerick)'s CodePen "[Custom Select Menu](https://codepen.io/wallaceerick/pen/ctsCz)".
 
 
 ## The plugin creates 3 blocks and uses 6 style classes
