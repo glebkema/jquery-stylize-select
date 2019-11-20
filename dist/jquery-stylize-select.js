@@ -3,7 +3,7 @@
   * Description: This plugin adds HTML blocks around the <select> field and creates the necessary event handlers. All that remains is to style these blocks with CSS.
   * Copyright (c) 2019 Gleb Kemarsky, https://github.com/glebkema/jquery-stylize-select
   * Licensed under the MIT license
-  * Version: 0.5.7
+  * Version: 0.5.8
   */
 
 (function($) {
