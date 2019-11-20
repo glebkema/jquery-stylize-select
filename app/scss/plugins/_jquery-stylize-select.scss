@@ -3,7 +3,8 @@
 // This file contains only the properties required for the functioning of the drop-down list and the field with the selection result.
 // You need to stylize them yourself.
 
-$stylize-select__z-index: 999 !default;
+$zindex-dropdown: 1000 !default;  // bootstrap 3
+$stylize-select__z-index: ( $zindex-dropdown - 10 ) !default;
 
 .stylize-select {
 	cursor: pointer;
